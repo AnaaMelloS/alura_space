@@ -148,11 +148,6 @@ Incluir dentro do base.html daquele app (ou do geral se todos os templates o uti
 
 {% include 'app/partials/_footer.html' %}
 Agora todos os que utilizam o base.html terão por padrão as coisas incluídas!
-Link para ver o que é ORM
-
-Imagem com o funcionamento de uma ORM:
-
-
 
 Django: persistência de dados e Admin
 A função _str_() é usada para definir como o objeto será printado, então ao redefinir ela, se redefinie como o objeto é printado em print().
