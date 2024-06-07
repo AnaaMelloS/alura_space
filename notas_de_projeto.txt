@@ -1,5 +1,5 @@
-Formação Django
-Django: templates e boas práticas
+## Formação Django
+# Django: templates e boas práticas
 Django é um framework orientado a conteúdo.
 
 É baseado na arquitetura MVT (baseado no MVC)
@@ -23,7 +23,7 @@ django-admin startproject setup .
 
 Pode-se pegar templates já prontos de gitignore para um framework ou linguagem em gitignore.io
 
-Comando de ajuda do django:
+# Comando de ajuda do django:
 
 python manage.py help
 Comando para criar um novo app (adicionar o app depois em settings.py):
@@ -166,7 +166,7 @@ from app.models import Modelo_desejado
 objeto_registro = Modelo_desejado(attr1="asasas", attr2="asdhjdsa")
 objeto_registro.save()
 
-#Para ver os objetos salvos dentro do modelo(tabela)
+# Para ver os objetos salvos dentro do modelo(tabela)
 Modelo_desejado.objects.all()
 É uma boa prática ao invés de deixar somente o nome do app criado em INSTALLED_APPS no settings.py, deixar desta forma:
 
@@ -181,7 +181,7 @@ INSTALLED_APPS = [
 ]
 Assim, o arquivo de configurações apps.py é puxado, que por sua vez puxa todo o app.
 
-Documentação Oficial Django sobre Models
+# Documentação Oficial Django sobre Models
 
 Para acessar valores de colunas de objetos de uma model em um HTML (template), utiliza-se tags especiais do Django para tais:
 
@@ -236,6 +236,7 @@ def view_tal(request, id_tal):  # Recebe o argumento definido na urls.py para es
 <a href="{% url 'imagem' fotografia.id %}"> 
 Para facilitar na adição/remoção/edição de itens no banco de dados, podemos utilizar o módulo de Admin do Django. Para poder manuseá-lo dentro da aplicação, precisa-se primeiro criar um super usuário. Após isso, basta logar na rota base '(ip:porta)/admin'
 python manage.py createsuperuser
+
 O Django também cria por automático o arquivo admin.py dentro de cada novo app criado. Para adicionar uma model para ser manuseada, precisa-se registrar a model desejada dentro deste arquivo:
 # Dentro de admin.py do app_tal
 from django.contrib import admin
@@ -318,7 +319,7 @@ O ModelTal.objects.get() retorna um objeto/registro da model. O ModelTal.objects
 
 Como criar páginas de autenticação no Django (se quiser entender o projeto, vai ter que ler o que tem antes XD)
 
-Django: autenticação de formulários e alerta
+## Django: autenticação de formulários e alerta
 É possível que um projeto esteja sendo desenvolvido numa versão do Python diferente da sua, então para isso, pode-se buscar utilizar outro interpretador Python para este. No caso do VSCode, basta Ctrl+Shift+P e digitar escolher interpretador. Depois, localizar e acessar a pasta do ambiente virtual do projeto em questão, selecionandoo python.exe dele.
 
 É uma boa prática todo app ter uma urls.py dentro de si. O urls.py do setup terá somente o include dos apps, com a string de urls vazia.
@@ -510,6 +511,7 @@ def view_tal(request):
     }
 
     return render(request, 'app/template_tal.html', contexto)
+
 O Django possui um framework embutido que cuida de mensagens (erro, sucesso etc). São tags de mensagens que podem ser utilizadas na aplicação, em que se é possível colocar o tipo de mensagem e seu conteúdo. Essas tags são colocadas no settings.py e usadas no template definido.
 # No settings.py
 
@@ -554,7 +556,8 @@ ValidationError() aparece em fields.error enquanto que as mensagens aparecem em 
     <p id="messages">{{message}}</p>
 </div>
 {% endfor %}
-Django: CRUD e persistência no S3
+
+## Django: CRUD e persistência no S3
 É possível criar Forms a partir de Models (classes de modelo) já existentes no projeto, ou seja, o Forms terá como campos os atributos da classe Model em questão.
 from django import forms
 
