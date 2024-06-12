@@ -306,7 +306,7 @@ attrMedia = models.ImageField(upload_to="fotos/%y/%m/%d/", blank=True) # Permite
 ...
 Colocar esta imagem para aparecer no template que se deseja (boas práticas para caso se a imagem não existir, substituindo por outra imagem default):
 {% if fotografia.foto == "" or fotografia.foto == null %}
-    <img class="card__imagem" src="{% static '/assets/imagens/app_tal/' %}{{ fotografia.foto }}" alt="foto_not_found">
+    <img class="card__imagem" src="{% static 'assets/imagens/app_tal/' %}{{ fotografia.foto }}" alt="foto_not_found">
 {% else %}
     <img class="card__imagem" src="{{ fotografia.foto.url }}" alt="foto">   <!-- Pega a URL da foto enviada por upload para dentro do projeto -->
 {% endif %}
@@ -535,7 +535,7 @@ MESSAGE_TAGS = {
 
 <!-- Em um template.html chamado por uma view onde tem o envio de um message, na qual se usará alertas -->
     <!-- (...) -->
-    <img src="{% static '/assets/logo/Logo(2).png' %}" alt="Logo da Alura Space" />
+    <img src="{% static 'assets/logo/Logo(2).png' %}" alt="Logo da Alura Space" />
     {% include 'app/partials/_alert.html' %}
     <div class="cabecalho__busca">
     <!-- (...) -->
@@ -554,48 +554,3 @@ ValidationError() aparece em fields.error enquanto que as mensagens aparecem em 
     <p id="messages">{{message}}</p>
 </div>
 {% endfor %}
-Django: CRUD e persistência no S3
-É possível criar Forms a partir de Models (classes de modelo) já existentes no projeto, ou seja, o Forms terá como campos os atributos da classe Model em questão.
-from django import forms
-
-from apps.viewtal.models import ModelTal
-
-
-# Cria um formulário com base em um form
-class ModelTalForms(forms.ModelForm):
-    class Meta:
-        model = ModelTal
-        exclude = ['attrNaoNecessario',]        # Exclui campos da models dos quais não precisa virar campo do forms
-        labels = {                              # Muda o que estará escrito no rótulo que fica no campo tal (por padrão vem o nome do atributo da model)
-            'attr1':'Atributo 1',
-            'attr2':'Atributo 2',
-        }
-
-        widgets = {
-            'attr1': forms.TextInput(attrs={'class':'form-control'}),    # Para o atributo attr1 de ModelTal (que agora é um campo do Forms atual)
-            'attr2': forms.TextInput(attrs={'class':'form-control'}), # Coloca o atributo 'form-control' no elemento HTML que este form irá virar quando estiver no template
-            'attr3_categoria': forms.Select(attrs={'class':'form-control'}),  # o Select é um dropdown com as categorias da ModelTal
-            'data_input': forms.DateField(                          # Campo de data, formatado para aparecer DD/MM/AAAA
-                format = '%d/%m/%y',
-                attrs={
-                    'class':'form-control',
-                    'type':'date',                                  # Para aparecer como um HTML do tipo Date
-                }
-            ),
-            'user': forms.Select(attrs={'class':'form-control'}),
-        }
-É possível passar argumentos a mais na tag da Django tag de URL no formato de: {% url 'name_da_view' talcoisa.attr %} que ficaria: '/name-da-view/5' por exemplo (dependendo do contexto). Contudo, a respectiva url na urls.py deve estar ajustada para poder receber esse argumento extra, permitindo então seu funcionamento.
-
-É possível instanciar um form de um modelo com os dados de um objeto dele que já existe, que no caso então os dados do formulário do modelo instanciado seria preenchido com os dados do objeto já existente do modelo. Se de fato for feito uma modificação e enviada (POST), se cria um novo form com os dados que vieram preenchidos da página, substituindo os dados que já haviam no objeto existente.
-
-obj_existente = ModelTal.objects.get(id=foto_id)
-
-form = ModelTalForm(instance=obj_existente)
-
-if request.method == 'POST':
-    form = ModelTalForm(request.POST, request.FILES, instance=obj_existente)
-O que é Cloud Computing?
-
-Uma das opções para se hospedar imagens de forma gratuita além do S3 Bucket da AWS (apesar de que nela vc coloca dados de pagamento) é a Cloudinary.
-
-O instrutor está utilizando o S3 da AWS no momento, porém não continuei porque no cadastro de uma nova conta da AWS, é necessário colocar dados de cobrança e de pagamento. Será necessário procurar um outro provedor para essa mesma funcionalidade, porém de maneira gratuita.
